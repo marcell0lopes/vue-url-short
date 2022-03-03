@@ -1,8 +1,8 @@
 <template>
-  <div class="container">
+  <div class="container max-w-screen-md">
     <form
       @submit.prevent="PostData"
-      class="w-4/5 max-w-screen-md bg-gray-50 p-10 lg:p-30 shadow-lg rounded-lg flex flex-col items-center"
+      class="w-full bg-gray-50 p-10 lg:p-30 shadow-lg rounded-lg flex flex-col items-center"
     >
       <h1
         class="mb-10 font-bold text-4xl tracking-tight text-teal-700 uppercase"
