@@ -15,8 +15,8 @@ const UrlSchema = new mongoose.Schema({
   },
   urlTitle: {
     type: String,
-    required: true,
-    default: 'Short URL',
+    required: false,
+    default: 'Untitled',
   },
   clicks: {
     type: Number,
