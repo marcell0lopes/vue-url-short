@@ -56,7 +56,11 @@
         class="underline text-teal-700 text-3xl cursor-pointer"
         >{{ this.shortUrl }}</a
       >
-      <button v-on:click="copyUrl">copiar</button>
+      <button v-on:click="copyUrl">
+        <i
+          class="fa-solid fa-copy bg-teal-700 text-white/90 px-3 py-2 rounded-lg text-lg hover:brightness-90 hover:shadow-sm transition-all"
+        />
+      </button>
     </div>
   </div>
 </template>
@@ -76,17 +80,17 @@ export default {
     };
   },
   methods: {
-    copyUrl() {
-      navigator.clipboard.writeText(this.shortUrl);
-    },
     PostData() {
       axios
         .post('http://localhost:3333/api/short', this.urlPostRequest)
         .then((res) => {
           const response = res.data;
           this.shortUrl = response.shortUrl;
-          console.log(response.shortUrl);
         });
+    },
+
+    copyUrl() {
+      navigator.clipboard.writeText(this.shortUrl);
     },
   },
 };
