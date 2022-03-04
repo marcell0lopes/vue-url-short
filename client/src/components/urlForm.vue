@@ -1,5 +1,12 @@
 <template>
   <div class="container max-w-screen-md">
+    <transition name="toast">
+      <ToastNotification
+        @close="showToast = false"
+        v-if="showToast"
+        alertMessage="O link que você inseriu parece inválido."
+      />
+    </transition>
     <form
       @submit.prevent="PostData"
       class="w-full bg-gray-50 p-10 lg:p-30 shadow-lg rounded-lg flex flex-col items-center"
@@ -47,9 +54,9 @@
     <!-- Resposta da API com o link encurtado! -->
     <div
       v-if="shortUrl"
-      class="mt-6 w-4/5 max-w-screen-md bg-gray-100 p-10 lg:p-30 shadow-sm rounded-lg text-center"
+      class="mt-6 w-full bg-gray-100 p-10 lg:p-30 shadow-sm rounded-lg text-center"
     >
-      <h1 class="text-xl mb-4 text-teal-900 font-bold">Seu novo link:</h1>
+      <h1 class="text-xl mb-4 text-indigo-800 font-bold">Seu novo link:</h1>
       <a
         :href="shortUrl"
         ref="shortLink"
@@ -58,7 +65,7 @@
       >
       <button v-on:click="copyUrl">
         <i
-          class="fa-solid fa-copy bg-teal-700 text-white/90 px-3 py-2 rounded-lg text-lg hover:brightness-90 hover:shadow-sm transition-all"
+          class="fa-solid fa-copy bg-teal-700 text-white/90 px-3 py-2 ml-4 rounded-lg text-lg hover:brightness-90 hover:shadow-sm transition-all"
         />
       </button>
     </div>
@@ -67,31 +74,51 @@
 
 <script>
 import axios from 'axios';
+import ToastNotification from './toastNotification.vue';
 
 export default {
   name: 'urlForm',
-
   data() {
     return {
       shortUrl: null,
       urlPostRequest: {
         originalUrl: '',
       },
+      showToast: false,
     };
   },
   methods: {
-    PostData() {
-      axios
-        .post('http://localhost:3333/api/short', this.urlPostRequest)
-        .then((res) => {
-          const response = res.data;
-          this.shortUrl = response.shortUrl;
-        });
+    async PostData() {
+      try {
+        await axios
+          .post('http://localhost:3333/api/short', this.urlPostRequest)
+          .then((res) => {
+            const response = res.data;
+            this.shortUrl = response.shortUrl;
+          });
+      } catch (err) {
+        this.showToast = true;
+      }
     },
-
     copyUrl() {
       navigator.clipboard.writeText(this.shortUrl);
     },
   },
+  components: { ToastNotification },
 };
 </script>
+
+<style scoped>
+/* enter styles */
+.toast-enter-from {
+  opacity: 0;
+  transform: translateX(60px);
+}
+.toast.enter-to {
+  opacity: 1;
+  transform: translateX(0);
+}
+.toast-enter-active {
+  transition: all 0.3s ease;
+}
+</style>
