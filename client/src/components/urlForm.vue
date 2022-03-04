@@ -97,6 +97,7 @@ export default {
             this.shortUrl = response.shortUrl;
           });
       } catch (err) {
+        this.shortUrl = null;
         this.showToast = true;
       }
     },
