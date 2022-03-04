@@ -1,9 +1,9 @@
 <template>
-  <main
+  <section
     class="w-screen h-screen bg-indigo-900 flex flex-col items-center justify-center"
   >
     <slot />
-  </main>
+  </section>
 </template>
 
 <script>
