@@ -1,6 +1,6 @@
 <template>
   <div
-    class="absolute right-5 top-5 bg-yellow-500 shadow-lg mx-auto w-96 max-w-full text-sm pointer-events-auto bg-clip-padding rounded-lg block mb-3"
+    class="absolute top-2 right-0 sm:right-5 sm:top-5 bg-yellow-500 shadow-lg mx-auto w-96 max-w-full text-sm pointer-events-auto bg-clip-padding rounded-lg block mb-3"
     role="alert"
     aria-live="assertive"
     aria-atomic="true"
