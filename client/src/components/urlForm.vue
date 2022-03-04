@@ -4,12 +4,12 @@
       <ToastAlert
         @close="showToastAlert = false"
         v-if="showToastAlert"
-        alertMessage="O link que você inseriu parece inválido."
+        :alertMessage="alertMessage"
       />
       <ToastSuccess
         @close="showToastSuccess = false"
         v-if="showToastSuccess"
-        successMessage="O link foi copiado para a àrea de transferência."
+        :successMessage="successMessage"
       />
     </transition-group>
     <form
@@ -92,7 +92,9 @@ export default {
         originalUrl: '',
       },
       showToastAlert: false,
+      alertMessage: 'Oops, something went wrong!',
       showToastSuccess: false,
+      successMessage: 'Success!',
     };
   },
   methods: {
@@ -106,10 +108,12 @@ export default {
           });
       } catch (err) {
         this.shortUrl = null;
+        this.alertMessage = 'O link inserido parece inválido.';
         this.showToastAlert = true;
       }
     },
     copyUrl() {
+      this.successMessage = 'O link foi copiado para a área de transferência.';
       this.showToastSuccess = true;
       navigator.clipboard.writeText(this.shortUrl);
     },
