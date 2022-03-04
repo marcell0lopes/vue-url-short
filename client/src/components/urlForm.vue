@@ -1,12 +1,17 @@
 <template>
   <div class="container max-w-screen-md">
-    <transition name="toast">
-      <ToastNotification
-        @close="showToast = false"
-        v-if="showToast"
+    <transition-group name="toast">
+      <ToastAlert
+        @close="showToastAlert = false"
+        v-if="showToastAlert"
         alertMessage="O link que você inseriu parece inválido."
       />
-    </transition>
+      <ToastSuccess
+        @close="showToastSuccess = false"
+        v-if="showToastSuccess"
+        successMessage="O link foi copiado para a àrea de transferência."
+      />
+    </transition-group>
     <form
       @submit.prevent="PostData"
       class="w-full bg-gray-50 p-10 lg:p-30 shadow-lg rounded-lg flex flex-col items-center"
@@ -74,17 +79,20 @@
 
 <script>
 import axios from 'axios';
-import ToastNotification from './toastNotification.vue';
+import ToastAlert from './toastAlert.vue';
+import ToastSuccess from './toastSuccess.vue';
 
 export default {
   name: 'urlForm',
+  components: { ToastAlert, ToastSuccess },
   data() {
     return {
       shortUrl: null,
       urlPostRequest: {
         originalUrl: '',
       },
-      showToast: false,
+      showToastAlert: false,
+      showToastSuccess: false,
     };
   },
   methods: {
@@ -98,14 +106,14 @@ export default {
           });
       } catch (err) {
         this.shortUrl = null;
-        this.showToast = true;
+        this.showToastAlert = true;
       }
     },
     copyUrl() {
+      this.showToastSuccess = true;
       navigator.clipboard.writeText(this.shortUrl);
     },
   },
-  components: { ToastNotification },
 };
 </script>
 
