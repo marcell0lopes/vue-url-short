@@ -79,8 +79,8 @@
 
 <script>
 import axios from 'axios';
-import ToastAlert from './toastAlert.vue';
-import ToastSuccess from './toastSuccess.vue';
+import ToastAlert from './toastAlert';
+import ToastSuccess from './toastSuccess';
 
 export default {
   name: 'urlForm',

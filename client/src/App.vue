@@ -8,9 +8,9 @@
 </template>
 
 <script>
-import MainSection from './components/mainSection.vue';
-import UrlForm from './components/urlForm.vue';
-import TopSection from './components/topSection.vue';
+import MainSection from '@/components/mainSection';
+import UrlForm from '@/components/urlForm';
+import TopSection from '@/components/topSection';
 
 export default {
   name: 'App',
