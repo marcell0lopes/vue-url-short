@@ -1,5 +1,5 @@
 <template>
-  <section class="w-screen h-screen bg-gray-100">
+  <section id="top" class="w-screen h-screen bg-gray-100">
     <h2
       class="py-8 text-4xl text-center font-bold tracking-tighter text-indigo-800"
     >
@@ -7,19 +7,17 @@
       <small class="text-base tracking-normal text-gray-600">(por click)</small>
     </h2>
 
-    <div
-      class="container max-w-4xl mx-auto bg-indigo-900 p-4 rounded-lg shadow-lg"
-    >
-      <table class="table-auto w-full bg-white/80">
+    <div class="max-w-4xl mx-auto bg-indigo-900 p-4 shadow-lg">
+      <table class="table-auto w-full">
         <thead
-          class="text-left text-gray-500 bg-white/90 font-bold text-sm rounded-lg"
+          class="text-left text-white bg-white/50 font-bold text-xs sm:text-sm"
         >
           <th class="p-4">Clicks</th>
           <th>Título</th>
           <th>Link</th>
         </thead>
 
-        <tbody class="text-md font-bold">
+        <tbody class="text-xs sm:text-md font-bold bg-white/95">
           <tr v-if="isLoading" class="bg-indigo-900 py-10 w-full">
             <td></td>
             <td class="flex flex-col items-center justify-center col-span-3">
