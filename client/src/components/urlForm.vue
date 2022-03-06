@@ -16,11 +16,6 @@
       @submit.prevent="PostData"
       class="w-full bg-gray-50 p-10 lg:p-30 shadow-lg rounded-lg flex flex-col items-center"
     >
-      <h1
-        class="mb-10 font-bold text-4xl tracking-tight text-teal-700 uppercase"
-      >
-        Encurte seus links!
-      </h1>
       <div class="flex flex-col sm:flex-row items-center w-full">
         <label for="originalUrl" class="text-2xl mr-4 font-bold text-indigo-900"
           >URL:</label
@@ -100,12 +95,10 @@ export default {
   methods: {
     async PostData() {
       try {
-        await axios
-          .post('http://localhost:3333/api/short', this.urlPostRequest)
-          .then((res) => {
-            const response = res.data;
-            this.shortUrl = response.shortUrl;
-          });
+        await axios.post('api/short', this.urlPostRequest).then((res) => {
+          const response = res.data;
+          this.shortUrl = response.shortUrl;
+        });
       } catch (err) {
         this.shortUrl = null;
         this.alertMessage = 'O link inserido parece inválido.';

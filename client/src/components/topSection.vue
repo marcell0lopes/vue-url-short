@@ -74,7 +74,7 @@ export default {
     };
   },
   async created() {
-    await axios.get('http://localhost:3333/api/top').then((res) => {
+    await axios.get('api/top').then((res) => {
       this.top100links = res.data;
       this.isLoading = false;
     });
