@@ -18,7 +18,7 @@ router.get('/top', async (req, res) => {
 // Gerar URL Reduzida:
 router.post('/short', async (req, res) => {
   const { originalUrl, urlTitle } = req.body;
-  const base = process.env.BASE;
+  const base = process.env.BASE_URL;
 
   const urlId = shortId.generate();
   if (utils.validateUrl(originalUrl)) {
