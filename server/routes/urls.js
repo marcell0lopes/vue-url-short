@@ -4,7 +4,6 @@ const shortId = require('shortid');
 const Url = require('../models/Url');
 const utils = require('../utils/utils');
 
-// Get top 100 URL (by clicks)
 router.get('/top', async (req, res) => {
   try {
     const top100url = await Url.find().sort({ clicks: -1 }).limit(100);
@@ -15,7 +14,6 @@ router.get('/top', async (req, res) => {
   }
 });
 
-// Gerar URL Reduzida:
 router.post('/short', async (req, res) => {
   const { originalUrl, urlTitle } = req.body;
   const base = process.env.BASE_URL;
@@ -41,7 +39,7 @@ router.post('/short', async (req, res) => {
       }
     } catch (err) {
       console.log(err);
-      res.status(500).json('Internal Server Error');
+      res.status(500).json('Internal Server Error:', err);
     }
   } else {
     res.status(400).json('Invalid URL');

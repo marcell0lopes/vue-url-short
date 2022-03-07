@@ -1,5 +1,11 @@
 const express = require('express');
+const session = require('express-session');
 const cors = require('cors');
+const mongoose = require('mongoose');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const User = require('./models/User');
+
 const connectDB = require('./config/db');
 
 const app = express();
@@ -7,26 +13,29 @@ const PORT = process.env.PORT;
 
 connectDB();
 
-// Body parser
-app.use(express.urlencoded({ extended: true }));
+app.use(express.static(__dirname + '/public'));
 app.use(express.json());
-
-// Permitir Cross-origin
+app.use(express.urlencoded({ extended: true }));
 app.use(cors());
+app.use(
+  session({
+    secret: 'vue is awesome',
+    resave: false,
+    saveUninitialized: false,
+  })
+);
 
-app.use('/', require('./routes/index'));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+// Routes
+app.use('/auth', require('./routes/users'));
 app.use('/api', require('./routes/urls'));
-
-// Handle Production
-if (process.env.NODE_ENV === 'production') {
-  // Static
-  app.use(express.static(__dirname + '/public/'));
-
-  // Handle SPA
-  app.get(/.*/, (req, res) => {
-    res.sendFile(__dirname + '/public/index.html');
-  });
-}
+app.use('/', require('./routes/index'));
 
 app.listen(PORT, () => {
   console.log(`Server is running at port :${PORT}`);
