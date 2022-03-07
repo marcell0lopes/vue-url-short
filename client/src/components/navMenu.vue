@@ -42,16 +42,46 @@
         <div
           class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"
         >
-          <p class="mx-3 text-indigo-900 hidden sm:block">
-            Bem vindo, <strong class="text-indigo-600">Usuário!</strong>
-          </p>
-          <button
-            type="button"
-            class="bg-indigo-800 p-1 rounded-full text-gray-300 hover:text-white/95 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-indigo-800 focus:ring-white"
-          >
-            <span class="sr-only">See Account</span>
-            <UserIcon class="h-6 w-6" aria-hidden="true" />
-          </button>
+          <div v-if="isLoggedIn" class="flex items-center">
+            <p class="mx-3 text-indigo-900 hidden sm:block">
+              Bem vindo, <strong class="text-indigo-600">Usuário!</strong>
+            </p>
+            <button
+              type="button"
+              class="bg-indigo-800 p-1 rounded-full text-gray-300 hover:text-white/95 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-indigo-800 focus:ring-white"
+            >
+              <span class="sr-only">See Account</span>
+              <UserIcon class="h-6 w-6" aria-hidden="true" />
+            </button>
+          </div>
+
+          <!-- MODAL -->
+          <div v-else>
+            <button
+              id="show-modal"
+              @click="openModal('login')"
+              class="rounded-full bg-teal-500 py-2 px-4 text-white/95 font-bold hover:bg-teal-600 transition-all ease-in-out"
+            >
+              Login
+            </button>
+
+            <button
+              id="show-modal"
+              @click="openModal('register')"
+              class="text-indigo-500 py-2 px-4 font-normal hover:text-indigo-800 hover:underline transition-all ease-in-out"
+            >
+              Registrar
+            </button>
+          </div>
+
+          <!-- REGISTER MODAL -->
+          <Teleport to="body">
+            <UserModal
+              :show="showModal"
+              :Register="register"
+              @close="showModal = false"
+            />
+          </Teleport>
         </div>
       </div>
     </div>
@@ -85,6 +115,7 @@ import {
   XIcon,
   SwitchHorizontalIcon,
 } from '@heroicons/vue/outline';
+import UserModal from './userModal.vue';
 
 const navigation = [
   { name: 'Home', href: '#', current: true },
@@ -100,6 +131,27 @@ export default {
     MenuIcon,
     XIcon,
     SwitchHorizontalIcon,
+    UserModal,
+  },
+  data() {
+    return {
+      isLoggedIn: false,
+      showModal: false,
+      register: false,
+    };
+  },
+  methods: {
+    async openModal(param) {
+      if (param === 'register') {
+        this.register = true;
+        this.showModal = true;
+        return;
+      } else if (param === 'login') {
+        this.register = false;
+        this.showModal = true;
+        return;
+      }
+    },
   },
   setup() {
     return {
