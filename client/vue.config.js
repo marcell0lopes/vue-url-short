@@ -9,6 +9,9 @@ module.exports = defineConfig({
       '/api/': {
         target: 'http://localhost:3333',
       },
+      '/auth/': {
+        target: 'http://localhost:3333',
+      },
     },
   },
 });
