@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <main id="main">
     <NavMenu />
     <MainSection>
       <UrlForm />
@@ -24,3 +24,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+#main {
+  overflow-x: hidden;
+}
+</style>
