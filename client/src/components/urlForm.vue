@@ -14,6 +14,7 @@
     </transition-group>
     <form
       @submit.prevent="PostData"
+      data-testid="urlForm"
       class="w-full bg-gray-50 p-10 lg:p-30 shadow-lg rounded-lg flex flex-col items-center"
     >
       <div class="flex flex-col sm:flex-row items-center w-full">
@@ -23,6 +24,7 @@
         <input
           type="text"
           name="originalUrl"
+          data-testid="urlInput"
           id="originalUrl"
           v-model="urlPostRequest.originalUrl"
           class="p-3 mb-4 w-full bg-slate-50 rounded border-2 border-slate-200 focus:border-slate-600 focus:outline-none"
@@ -39,6 +41,7 @@
           type="text"
           name="urlTitle"
           id="urlTitle"
+          data-testid="urlTitle"
           placeholder="(opcional)"
           v-model="urlPostRequest.urlTitle"
           class="p-3 mx-4 w-full bg-slate-50 rounded border-2 border-slate-200 focus:border-slate-600 focus:outline-none"
@@ -60,6 +63,7 @@
       <a
         :href="shortUrl"
         ref="shortLink"
+        data-testid="shortLink"
         class="underline text-teal-700 text-3xl cursor-pointer"
         >{{ this.shortUrl }}</a
       >
@@ -73,40 +77,40 @@
 </template>
 
 <script>
-import axios from 'axios';
-import ToastAlert from './toastAlert';
-import ToastSuccess from './toastSuccess';
+import axios from "axios";
+import ToastAlert from "./toastAlert";
+import ToastSuccess from "./toastSuccess";
 
 export default {
-  name: 'urlForm',
+  name: "urlForm",
   components: { ToastAlert, ToastSuccess },
   data() {
     return {
       shortUrl: null,
       urlPostRequest: {
-        originalUrl: '',
+        originalUrl: "",
       },
       showToastAlert: false,
-      alertMessage: 'Oops, something went wrong!',
+      alertMessage: "Oops, something went wrong!",
       showToastSuccess: false,
-      successMessage: 'Success!',
+      successMessage: "Success!",
     };
   },
   methods: {
     async PostData() {
       try {
-        await axios.post('api/short', this.urlPostRequest).then((res) => {
+        await axios.post("api/short", this.urlPostRequest).then((res) => {
           const response = res.data;
           this.shortUrl = response.shortUrl;
         });
       } catch (err) {
         this.shortUrl = null;
-        this.alertMessage = 'O link inserido parece inválido.';
+        this.alertMessage = "O link inserido parece inválido.";
         this.showToastAlert = true;
       }
     },
     copyUrl() {
-      this.successMessage = 'O link foi copiado para a área de transferência.';
+      this.successMessage = "O link foi copiado para a área de transferência.";
       this.showToastSuccess = true;
       navigator.clipboard.writeText(this.shortUrl);
     },
