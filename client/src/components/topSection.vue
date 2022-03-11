@@ -41,6 +41,7 @@
 
           <tr
             v-else
+            data-testid="topLink"
             v-for="link in top100links"
             :key="link._id"
             class="border-solid border-b-2 border-indigo-800"
@@ -63,10 +64,10 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 
 export default {
-  name: 'topUrls',
+  name: "topUrls",
   data() {
     return {
       isLoading: true,
@@ -74,7 +75,7 @@ export default {
     };
   },
   async created() {
-    await axios.get('api/top').then((res) => {
+    await axios.get("api/top").then((res) => {
       this.top100links = res.data;
       this.isLoading = false;
     });
