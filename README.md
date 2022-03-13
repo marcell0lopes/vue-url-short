@@ -21,6 +21,24 @@ O Objetivo do projeto é um encurtador de URL feito com `Vue` e `nodeJS`.
 
 Em adicional, utilizei `TailwindCSS` para os estilos e `MongoDB` como banco de dados.
 
+<ul>
+<li>
+
+[Como Instalar as Dependências](#como-instalar-as-dependências)
+
+</li>
+<li>
+
+[Iniciando o Projeto](#iniciando-o-projeto)
+
+</li>
+<li>
+
+[Processo Seletivo](#processo-seletivo)
+
+</li>
+
+</ul>
 <hr>
 
 ## Como instalar as dependências
@@ -46,7 +64,7 @@ BASE_URL=http:localhost:3333/
 MONGO_URI=mongodb+srv://<username>:<password>@urlshortenercluster.8pfxw.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
 ```
 
-### Com as dependências instaladas e o .env configurado na pasta `server`, você está pronto para rodar o projeto! :tada:
+### Com as dependências instaladas e o `.env` configurado na pasta `server`, você está pronto para rodar o projeto! :tada:
 
 <hr>
 
@@ -87,3 +105,5 @@ cd clients && yarn serve
 > ## Processo Seletivo
 >
 > Toda informação sobre o projeto e seu andamento referente ao processo seletivo que ele faz parte será tratada via e-mail a fim de proteger a privacidade da empresa contratante e do candidato (eu :wink:).
+
+Muito obrigado! Qualquer feedback é bem-vindo. :rocket:
