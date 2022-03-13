@@ -77,40 +77,40 @@
 </template>
 
 <script>
-import axios from "axios";
-import ToastAlert from "./toastAlert";
-import ToastSuccess from "./toastSuccess";
+import axios from 'axios';
+import ToastAlert from './toastAlert';
+import ToastSuccess from './toastSuccess';
 
 export default {
-  name: "urlForm",
+  name: 'urlForm',
   components: { ToastAlert, ToastSuccess },
   data() {
     return {
       shortUrl: null,
       urlPostRequest: {
-        originalUrl: "",
+        originalUrl: '',
       },
       showToastAlert: false,
-      alertMessage: "Oops, something went wrong!",
+      alertMessage: 'Oops, something went wrong!',
       showToastSuccess: false,
-      successMessage: "Success!",
+      successMessage: 'Success!',
     };
   },
   methods: {
     async PostData() {
       try {
-        await axios.post("api/short", this.urlPostRequest).then((res) => {
+        await axios.post('api/short', this.urlPostRequest).then((res) => {
           const response = res.data;
           this.shortUrl = response.shortUrl;
         });
       } catch (err) {
         this.shortUrl = null;
-        this.alertMessage = "O link inserido parece inválido.";
+        this.alertMessage = 'O link inserido parece inválido.';
         this.showToastAlert = true;
       }
     },
     copyUrl() {
-      this.successMessage = "O link foi copiado para a área de transferência.";
+      this.successMessage = 'O link foi copiado para a área de transferência.';
       this.showToastSuccess = true;
       navigator.clipboard.writeText(this.shortUrl);
     },
