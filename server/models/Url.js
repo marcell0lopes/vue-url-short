@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const UrlSchema = new mongoose.Schema({
   urlId: {
@@ -16,7 +16,7 @@ const UrlSchema = new mongoose.Schema({
   urlTitle: {
     type: String,
     required: false,
-    default: 'Untitled',
+    default: "Untitled",
   },
   clicks: {
     type: Number,
@@ -27,6 +27,10 @@ const UrlSchema = new mongoose.Schema({
     type: String,
     default: Date.now,
   },
+  isFavorite: {
+    type: Boolean,
+    default: false,
+  },
 });
 
-module.exports = mongoose.model('Url', UrlSchema);
+module.exports = mongoose.model("Url", UrlSchema);
