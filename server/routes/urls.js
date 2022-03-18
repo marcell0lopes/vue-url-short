@@ -1,20 +1,34 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const shortId = require('shortid');
-const Url = require('../models/Url');
-const utils = require('../utils/validateUrl');
+const shortId = require("shortid");
+const Url = require("../models/Url");
+const utils = require("../utils/validateUrl");
 
-router.get('/top', async (req, res) => {
+router.get("/top", async (req, res) => {
   try {
     const top100url = await Url.find().sort({ clicks: -1 }).limit(100);
     res.json(top100url);
   } catch (err) {
     console.log(err);
-    res.status(500).json('Internal Server Error');
+    res.status(500).json("Internal Server Error");
   }
 });
 
-router.post('/short', async (req, res) => {
+router.post("/favorite/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const url = await Url.findOne({ urlId: id });
+    url.isFavorite = !url.isFavorite;
+    await url.save();
+    res.status(201).json(url);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json("Internal Server Error");
+  }
+});
+
+router.post("/short", async (req, res) => {
   const { originalUrl, urlTitle } = req.body;
   const base = process.env.BASE_URL;
 
@@ -39,10 +53,10 @@ router.post('/short', async (req, res) => {
       }
     } catch (err) {
       console.log(err);
-      res.status(500).json('Internal Server Error:', err);
+      res.status(500).json("Internal Server Error:", err);
     }
   } else {
-    res.status(400).json('Invalid URL');
+    res.status(400).json("Invalid URL");
   }
 });
 
