@@ -15,6 +15,7 @@
           <th class="p-4">Clicks</th>
           <th>Título</th>
           <th>Link</th>
+          <th>Favorito</th>
         </thead>
 
         <tbody class="text-xs sm:text-md font-bold bg-white/95">
@@ -56,6 +57,17 @@
                 {{ link.shortUrl }}
               </a>
             </td>
+            <td>
+              <button
+                v-if="link.isFavorite"
+                @click="handleFavoriteClick(link.urlId)"
+              >
+                <StarIconSolid class="w-5 h-5" />
+              </button>
+              <button v-else @click="handleFavoriteClick(link.urlId)">
+                <StarIcon class="w-5 h-5" />
+              </button>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -64,18 +76,38 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
+import { StarIcon } from "@heroicons/vue/outline";
+import { StarIcon as StarIconSolid } from "@heroicons/vue/solid";
 
 export default {
-  name: 'topUrls',
+  name: "topUrls",
+  components: {
+    StarIcon,
+    StarIconSolid,
+  },
   data() {
     return {
       isLoading: true,
       top100links: [],
     };
   },
+  methods: {
+    handleFavoriteClick(id) {
+      const urlId = id;
+      axios.post(`api/favorite/${urlId}`).then((res) => {
+        const data = res.data;
+        console.log(this.top100links, data);
+        const urlIndex = this.top100links.findIndex(
+          (item) => item.urlId === id
+        );
+        this.top100links[urlIndex] = data;
+      });
+    },
+  },
+
   async created() {
-    await axios.get('api/top').then((res) => {
+    await axios.get("api/top").then((res) => {
       this.top100links = res.data;
       this.isLoading = false;
     });
