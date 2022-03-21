@@ -9,7 +9,6 @@ router.get("/top", async (req, res) => {
     const top100url = await Url.find().sort({ clicks: -1 }).limit(100);
     res.json(top100url);
   } catch (err) {
-    console.log(err);
     res.status(500).json("Internal Server Error");
   }
 });
@@ -23,7 +22,6 @@ router.post("/favorite/:id", async (req, res) => {
     await url.save();
     res.status(201).json(url);
   } catch (err) {
-    console.log(err);
     res.status(500).json("Internal Server Error");
   }
 });
@@ -52,7 +50,6 @@ router.post("/short", async (req, res) => {
         res.json(url);
       }
     } catch (err) {
-      console.log(err);
       res.status(500).json("Internal Server Error:", err);
     }
   } else {
